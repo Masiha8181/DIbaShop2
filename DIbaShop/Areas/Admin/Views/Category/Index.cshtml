@@ -1,0 +1,128 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@model IEnumerable<DataLayer.Entities.CategoryProduct>
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <h3>فهرست دسته بندی ها</h3>
+            </div>
+            <div class="col-12 col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a></li>
+                    <li class="breadcrumb-item">جداول داده</li>
+                    <li class="breadcrumb-item active">جداول داده ای پایه</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <a href="/Admin/Category/Create" class="btn btn-success" style="margin-bottom: 20px"> ایجاد دسته بندی</a>
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="table-responsive">
+
+
+
+
+
+                        @foreach (var item in Model.Where(p => p.Parentid == null))
+                        {
+
+                            <ul class="cat-list-ul">
+
+
+
+                                <a href="/Admin/Category/Modify/@item.id">
+                                <li>
+                                        @item.categoryName
+                                    <img src="/Categoryimages/@item.ImageAddress" class="img-thumbnail" style="max-width: 35px;max-height: 35px">
+
+
+
+                                    <ul class="cat-list-ul">
+                                            @{
+                                                if (Model.Any(p => p.Parentid == item.id))
+                                                {
+
+                                                    foreach (var VARIABLE in Model.Where(p => p.Parentid == item.id).ToList())
+                                                    {
+
+                                                        <a href="/Admin/Category/Modify/@VARIABLE.id">
+                                                    <li>
+                                                                @VARIABLE.categoryName
+                                                        <img src="/Categoryimages/@VARIABLE.ImageAddress" class="img-thumbnail" style="max-width: 35px;max-height:35px">
+
+
+                                                        <ul class="cat-list-ul">
+                                                                    @{
+                                                                        if (Model.Any(p => p.Parentid == VARIABLE.id))
+                                                                        {
+
+                                                                            foreach (var VARIABLE2 in Model.Where(p => p.Parentid == VARIABLE.id).ToList())
+                                                                            {
+
+                                                                        <a href="/Admin/Category/Modify/@VARIABLE2.id">
+                                                                        <li>
+                                                                                        @VARIABLE2.categoryName
+
+                                                                            <img src="/Categoryimages/@VARIABLE2.ImageAddress" class="img-thumbnail" style="max-width: 35px;max-height:35px">
+
+                                                                            <ul class="cat-list-ul">
+                                                                                            @{
+                                                                                                if (Model.Any(p => p.Parentid == VARIABLE2.id))
+                                                                                                {
+
+                                                                                                    foreach (var VARIABLE3 in Model.Where(p => p.Parentid == VARIABLE2.id).ToList())
+                                                                                                    {
+
+                                                                                                        <a href="/Admin/Category/Modify/@VARIABLE3.id">
+                                                                                                            <li>
+                                                                                                                @VARIABLE3.categoryName
+                                                                                                                <img src="/Categoryimages/@VARIABLE3.ImageAddress" class="img-thumbnail" style="max-width: 35px;max-height:35px">
+                                                                                                            </li>
+                                                                                                        </a>
+                                                                                                    }
+                                                                                                }
+
+                                                                                            }
+                                                                            </ul>
+                                                                        </li>
+                                                                                </a>
+                                                                            }
+                                                                        }
+
+                                                                    }
+                                                        </ul>
+                                                    </li>
+                                                        </a>
+                                                    }
+                                                }
+
+                                            }
+                                    </ul>
+                                </li>
+                                </a>
+
+
+
+
+
+                            </ul>
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid Ends-->

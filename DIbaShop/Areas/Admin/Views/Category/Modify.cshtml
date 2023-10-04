@@ -1,0 +1,148 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+@model DataLayer.DTO.Category.ModifyCategoryProductDTO
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <h3>ویرایش  دسته بندی @Model.categoryName</h3>
+            </div>
+            <div class="col-12 col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">کنترل های فرم</li>
+                    <li class="breadcrumb-item active">ورودی پایه</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <h5>ویرایش  دسته بندی</h5>
+                </div>
+
+                <form class="form theme-form" method="post" asp-action="Modify" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <div class="row">
+                            @{
+                                if (ViewBag.success != null)
+                                {
+                                    <div class="alert alert-center alert-success">با موفقیت اضافه شد</div>
+                                }
+                            }
+                            <input type="hidden" asp-for="Id"/>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="categoryName" class="form-label"></label>
+                                    <input asp-for="categoryName" type="text" class="form-control" placeholder="نام دسته بندی را وارد کنید:" />
+                                    <span class="text-danger" asp-validation-for="categoryName"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="ImageAddress" class="form-label"></label>
+                                    <input name="File" id="Image" onchange="showPreview(event);" type="file" class="form-control" />
+                                    <img src="/Categoryimages/@Model.ImageAddress" id="FinalImage" style="display: inline-block;max-width: 200px" />
+                                    <span class="text-danger" asp-validation-for="ImageAddress"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="Parentid" class="form-label"></label>
+                                    <select class="form-select" asp-for="Parentid">
+                                        <option value="">---- انتخاب ----</option>
+                                        @{
+                                            foreach (var item in ViewBag.Category)
+                                            {
+                                                <option value="@item.id">@item.categoryName</option>
+                                            }
+                                        }
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="Parentid"></span>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="card-footer text-end">
+                        <button class="btn btn-primary" type="submit">ویرایش</button>
+                  
+                        <input class="btn btn-light" type="reset" value="لغو">
+                
+                    </div>
+                </form>
+                <button class="btn btn-danger"  onclick="sweet(@Model.Id);">حذف</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    function showPreview(event) {
+        if (event.target.files.length > 0) {
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById("FinalImage");
+            preview.src = src;
+            preview.style.display = "block";
+            preview.style.width = "200px";
+        }
+    }
+
+
+</script>
+<script>
+  function sweet(id){
+    swal({
+        title: "حذف!",
+        text: "آیا از حدف این دسته بندی اطمینان دارید؟",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+
+                    $(function () {
+                        
+                            $.ajax({
+                                type: "GET",
+                                url: "/admin/category/remove/@Model.Id",
+                                data: { "name": "s" },
+                                success: function (response) {
+                                location.href = "/Admin/category"
+                                },
+                                failure: function (response) {
+                                    alert(response.responseText);
+                                },
+                                error: function (response) {
+                                    alert(response.responseText);
+                                }
+                            });
+                        
+                    });
+                   
+            } else {
+                swal("عملیات لغو شد");
+            }
+        });
+  
+  }
+</script>
+<!-- Container-fluid Ends-->
