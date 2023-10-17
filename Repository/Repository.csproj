@@ -17,6 +17,13 @@
 
   <ItemGroup>
     <Folder Include="Interface\CategoryInteface\" />
+    <Folder Include="Interface\ColorInterface\" />
+    <Folder Include="Interface\SliderInterface\" />
+    <Folder Include="Interface\SubProductInterface\" />
+    <Folder Include="Interface\SizeInterface\" />
+    <Folder Include="Interface\ProductGalleryInteface\" />
+    <Folder Include="Interface\ProductFeatureInterface\" />
+    <Folder Include="Interface\ProductInterface\" />
   </ItemGroup>
 
 </Project>

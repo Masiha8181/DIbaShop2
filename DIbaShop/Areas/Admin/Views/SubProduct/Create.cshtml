@@ -1,0 +1,143 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+@using DataLayer.Entities
+@model DataLayer.DTO.SubProduct.CreateSubProductDTO
+
+@{
+    Product product = ViewBag.Product;
+    List<Color> colors = ViewBag.Color as List<Color>;
+    List<Size> Sizes = ViewBag.Size as List<Size>;
+}
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <h3>ساخت  مدل برای @product.ProductName</h3>
+            </div>
+            <div class="col-12 col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">کنترل های فرم</li>
+                    <li class="breadcrumb-item active">ورودی پایه</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <h5>ساخت زیر محصول</h5>
+                </div>
+
+                <form class="form theme-form" method="post" asp-action="Create" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <div class="row">
+                           <input type="hidden" value="@product.id" asp-for="Productid"/>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="ProductModelName" class="form-label"></label>
+                                    <input asp-for="ProductModelName" type="text" class="form-control" placeholder="نام مدل را وارد کنید:" />
+                                    <span class="text-danger" asp-validation-for="ProductModelName"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="Count" class="form-label"></label>
+                                    <input asp-for="Count" class="form-control" type="number" placeholderlaceholder="تعداد محصول...">
+                                    <span class="text-danger" asp-validation-for="Count"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="Price" class="form-label"></label>
+                                    <input asp-for="Price" type="number" class="form-control" placeholder="قیمت محصول را وارد کنید:" />
+                                    <span class="text-danger" asp-validation-for="Price"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="Colorid" class="form-label"></label>
+                                    <select asp-for="Colorid" class="form-select">
+                                       @{
+                                           foreach (Color color in colors)
+                                           {
+                                               <option  value="@color.id">@color.ColorValue<span style="display: inline-block; width: 50px; height: 50px; border-radius: 50%;background-color: @color.ColorCode"></span></option>
+                                           }
+                                       }
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="Colorid"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="Sizeid" class="form-label"></label>
+                                    <select asp-for="Sizeid" class="form-select">
+                                        @{
+                                            foreach (Size Size in Sizes)
+                                            {
+                                                <option  value="@Size.id">@Size.SizeValue</option>
+                                            }
+                                        }
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="Sizeid"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="IsInStock" class="form-label"></label>
+                                    <input asp-for="IsInStock" class="form-check-input" type="checkbox" />
+
+                                    <span class="text-danger" asp-validation-for="IsInStock"></span>
+                                </div>
+                            </div>
+                        </div>
+                    
+
+
+
+                    </div>
+                    <div class="card-footer text-end">
+                        <button class="btn btn-primary" type="submit">ایجاد</button>
+                        <input class="btn btn-light" type="reset" value="لغو">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    function showPreview(event) {
+        if (event.target.files.length > 0) {
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById("FinalImage");
+            preview.src = src;
+            preview.style.display = "block";
+            preview.style.width = "200px";
+        }
+    }
+
+
+</script>
+
+
+<!-- Container-fluid Ends-->

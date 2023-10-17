@@ -1,0 +1,160 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+@using DataLayer.Entities
+@model IEnumerable<DataLayer.DTO.SubProduct.ShowSubproductDTO>
+@{
+    Product product = ViewBag.Product;
+}
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <h3>فهرست مدل های @product.ProductName </h3>
+            </div>
+            <div class="col-12 col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a></li>
+                    <li class="breadcrumb-item">جداول داده</li>
+                    <li class="breadcrumb-item active">جداول داده ای پایه</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <a href="/Admin/SubProduct/Create/@product.id" class="btn btn-success" style="margin-bottom: 20px"> ایجاد مدل برای @product.ProductName</a>
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="table-responsive">
+
+                        <table id="Table" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>آیدی :</th>
+                                    <th> نام محصول :</th>
+
+                                    <th>توضیحات محصول :</th>
+
+
+
+                                    <th>تاریخ ایجاد محصول :</th>
+                                    <th>تعداد فروش :</th>
+                                    <th>قیمت پایه محصول :</th>
+                                    <th>تصویر اصلی محصول :</th>
+                                    <th>موجود است؟ :</th>
+                                    <th>عملیات :</th>
+                                </tr>
+                            </thead>
+                            @{
+                                Product item2 = ViewBag.Product;
+                                <tbody>
+                                    <tr>
+
+
+                                        <td>@item2.id</td>
+                                        <td>@item2.ProductName</td>
+
+
+
+                                        <td>@item2.ShortProductDescription</td>
+                                        <td>@item2.CreateDate</td>
+                                        <td>@item2.SellCount</td>
+                                        <td>@item2.Price تومان</td>
+                                        <td><img src="/MainProductImages/@item2.MainProductImage" style="max-width: 100px; max-height: 100px;"></td>
+                                        @{
+                                            if (@item2.IsInStock == true)
+                                            {
+                                                <td style="color: green">موجود </td>
+                                            }
+                                            else if (@item2.IsInStock == false)
+                                            {
+                                                <td style="color: red">ناموجود </td>
+                                            }
+                                        }
+                                        <td>
+                                            <a href="/admin/Product/edit/@item2.id" class="btn btn-primary" style="width: 100%; margin: 3px 0px">ویرایش</a>
+                                            <a href="" class="btn btn-secondary" style="width: 100%; margin: 3px 0px">مدل ها</a>
+                                            <a href="/admin/productFeature/index/@item2.id" class="btn btn-warning" style="width: 100%; margin: 3px 0px">ویژگی ها</a>
+                                            <a href="/admin/Gallery/Index/@item2.id" class="btn btn-dark" style="width: 100%; margin: 3px 0px">گالری </a>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            }
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="table-responsive">
+
+                        <table id="Table" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>آیدی :</th>
+                                    <th>نام مدل :</th>
+                                    <th>موجودی مدل :</th>
+                                    <th>قیمت مدل :</th>
+                                    <th>رنگ مدل :</th>
+                                    <th>سایز مدل :</th>
+                                    <th>موجود است؟:</th>
+                                    <th>تاریخ ایجاد:</th>
+                                    <th>عملیات :</th>
+                                </tr>
+                            </thead>
+                            @foreach (var item in Model)
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td>@item.id</td>
+                                        <td>@item.ProductModelName</td>
+                                        <td>@item.Count</td>
+                                        <td>@item.Price</td>
+                                        <td style="text-align: center">@item.Color.ColorValue<br /> <br /> <span style="display: inline-block; width: 50px; height: 50px; border-radius: 50%;background-color: @item.Color.ColorCode"></span></td>
+                                        <td>@item.Size.SizeValue</td>
+                                        @{
+                                            if (item.IsInStock == true)
+                                            {
+                                                <td style="color: green">موجود</td>
+                                            }
+                                            else 
+                                                {
+                                                    <td style="color: red">نا موجود</td>
+                                                }
+                                        }
+                                        <td>@item.CreateDate</td>
+                                        <td style="text-align: center">
+                                            <a href="/admin/SubProduct/edit/@item.id" class="btn btn-primary" style="margin-bottom: 10px">ویرایش</a>
+                                            <br>
+                                            <a href="/admin/SubProduct/Increase/@item.id" class="" style="font-size: 27px; display: inline-block; color: green"><i class="bi bi-plus-circle-fill"></i></a>
+                                            <a href="/admin/SubProduct/decrease/@item.id" class="" style="font-size: 27px; display: inline-block; color: red"><i class="bi bi-dash-circle-fill"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            }
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

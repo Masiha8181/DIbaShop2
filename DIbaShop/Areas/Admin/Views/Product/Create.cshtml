@@ -1,0 +1,151 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+@model DataLayer.DTO.Product.CreateProductDTO
+<script src="/ckeditor/ckeditor.js"></script>
+<script src="/ckfinder/ckfinder.js>"></script>
+
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <h3>ساخت  محصول</h3>
+            </div>
+            <div class="col-12 col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">کنترل های فرم</li>
+                    <li class="breadcrumb-item active">ورودی پایه</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <h5>ساخت محصول</h5>
+                </div>
+
+                <form class="form theme-form" method="post" asp-action="Create" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <div class="row">
+                            @{
+                                if (ViewBag.success != null)
+                                {
+                                    <div class="alert alert-center alert-success">با موفقیت اضافه شد</div>
+                                }
+                            }
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="ProductName" class="form-label"></label>
+                                    <input asp-for="ProductName" type="text" class="form-control" placeholder="نام محصول را وارد کنید:" />
+                                    <span class="text-danger" asp-validation-for="ProductName"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="ProductDescription" class="form-label"></label>
+                                    <textarea asp-for="ProductDescription" id="text"  placeholder="توضیحات محصول..."  ></textarea>
+                                    <span class="text-danger" asp-validation-for="ProductDescription"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+
+                            CKEDITOR.replace('text');
+                        </script>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="ShortProductDescription" class="form-label"></label>
+                                    <input asp-for="ShortProductDescription" type="text" class="form-control" placeholder="توضیحات کوتاه  را وارد کنید:" />
+                                    <span class="text-danger" asp-validation-for="ShortProductDescription"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="Price" class="form-label"></label>
+                                    <input asp-for="Price" type="number" class="form-control" placeholder="قیمت محصول را وارد کنید:" />
+                                    <span class="text-danger" asp-validation-for="Price"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="MainProductImage" class="form-label"></label>
+                                    <input asp-for="MainProductImage" id="Image" onchange="showPreview(event);" type="file" class="form-control" />
+                                    <img src="#" id="FinalImage" style="display: none" />
+                                    <span class="text-danger" asp-validation-for="MainProductImage"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="IsInStock" class="form-label"></label>
+                                    <input asp-for="IsInStock" type="checkbox" />
+
+                                    <span class="text-danger" asp-validation-for="IsInStock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="CategoryProductid" class="form-label"></label>
+                                    <select class="form-select" asp-for="CategoryProductid">
+                                        <option value="">---- انتخاب ----</option>
+                                        @{
+                                            foreach (var item in ViewBag.Category)
+                                            {
+                                                <option value="@item.id">@item.categoryName</option>
+                                            }
+                                        }
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="CategoryProductid"></span>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="card-footer text-end">
+                        <button class="btn btn-primary" type="submit">ایجاد</button>
+                        <input class="btn btn-light" type="reset" value="لغو">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    function showPreview(event) {
+        if (event.target.files.length > 0) {
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById("FinalImage");
+            preview.src = src;
+            preview.style.display = "block";
+            preview.style.width = "200px";
+        }
+    }
+
+
+</script>
+
+
+<!-- Container-fluid Ends-->

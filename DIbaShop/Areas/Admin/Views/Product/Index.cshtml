@@ -1,0 +1,247 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+
+}
+@using DataLayer.Entities
+@model IEnumerable<DataLayer.Entities.Product>
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <h3>فهرست محصولات</h3>
+            </div>
+            <div class="col-12 col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a></li>
+                    <li class="breadcrumb-item">جداول داده</li>
+                    <li class="breadcrumb-item active">جداول داده ای پایه</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <a href="/Admin/Product/Create" class="btn btn-success" style="margin-bottom: 20px"> ایجاد محصول</a>
+            <div class="card">
+
+                <div class="card-body">
+                    <form asp-action="Index" method="get">
+                        <div class="row" style="margin-bottom: 20px">
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">جستجو محصول </label>
+                                    <input type="text" name="Search" value="@ViewBag.Search" placeholder="جستجو ..." class="form-control" />
+
+
+                                </div>
+
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">انتخاب دسته بندی</label>
+                                    <select class="form-control" name="Category" id="exampleFormControlSelect1">
+                                        <option value=0>همه</option>
+                                        @{
+                                            List<CategoryProduct> categoryProducts = ViewBag.category as List<CategoryProduct>;
+                                            foreach (var item in ViewBag.Category)
+                                            {
+
+                                                if (item.id==ViewBag.Categoryselect)
+                                                {
+                                                    <option selected="selected" value="@item.id">@item.categoryName</option>
+                                                }
+                                                <option value="@item.id">@item.categoryName</option>
+                                            }
+                                        }
+                                    </select>
+
+
+                                </div>
+
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">مرتب سازی بر اساس</label>
+                                    <select class="form-control" name="Order" id="exampleFormControlSelect1">
+                                        @{
+                                            if (ViewBag.Order!=null)
+                                            {
+                                                <option value="@ViewBag.Order">
+                                                    @switch (@ViewBag.Order)
+                                                    {
+                                                        case "Date":
+                                                            <span> زمان صعودی</span>
+                                                            break;
+
+                                                        case "Date-Desc":
+                                                            <span> زمان نزولی</span>
+                                                            break;
+                                                        case "SellCount":
+                                                            <span> تعداد فروش</span>
+                                                            break;
+                                                        case "Desc":
+                                                            <span> الفبا نزولی</span>
+                                                            break;
+                                                        case "Asc":
+                                                            <span> زمان صعودی</span>
+                                                            break;
+                                                        case "High":
+                                                            <span> گران ترین</span>
+                                                            break;
+                                                        case "Low":
+                                                            <span> ارزان ترین</span>
+                                                            break;
+                                                    }
+                                                </option>
+                                            }
+                                        }
+                                        <option value="Date"> زمان صعودی</option>
+                                        <option value="Date-Desc"> زمان نزولی</option>
+                                        <option value="SellCount"> تعداد فروش</option>
+                                        <option value="Asc">الفبا صعودی</option>
+                                        <option value="Desc">الفبا نزولی</option>
+                                        <option value="High">گران ترین</option>
+                                        <option value="Low">ارزان ترین</option>
+                                    </select>
+
+
+                                </div>
+
+                            </div>
+                            <div class="col-2">
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">موجودی</label>
+                                    <select class="form-control" name="Stock" id="exampleFormControlSelect1">
+                                        
+                                        @{
+                                            if (ViewBag.Stock!=null)
+                                            {
+                                                <option value="@ViewBag.Stock">
+                                                    @switch (ViewBag.Stock)
+                                                    {
+                                                        case "All":
+                                                            <span> همه</span>
+                                                            break;
+                                                        case "InStock":
+                                                            <span> فقط موجود</span>
+                                                            break;
+                                                        case "OutStock":
+                                                            <span> فقط ناموجود</span>
+                                                            break;
+                                                    }
+                                                </option>
+                                            }
+                                        }
+                                        <option value="All">همه</option>
+                                        <option value="InStock">فقط موجود</option>
+                                        <option value="OutStock">فقط ناموجود</option>
+
+                                    </select>
+
+
+                                </div>
+
+                            </div>
+                            <div class="col-3" style="margin-top: 30px">
+                                <div class="form-group">
+
+                                    <input type="submit" style="padding: 7px 0px; ;width: 100%" value="اعمال فیلتر" class="btn btn-info" />
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+                    <div class="table-responsive">
+
+                        <table id="Table" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>آیدی :</th>
+                                    <th> نام محصول :</th>
+                                    <th>دسته بندی محصول:</th>
+                                    <th>توضیحات محصول :</th>
+
+                                    <th>توضیحات کوتاه محصول :</th>
+
+                                    <th>تاریخ ایجاد محصول :</th>
+                                    <th>تعداد فروش :</th>
+                                    <th>قیمت پایه محصول :</th>
+                                    <th>تصویر اصلی محصول :</th>
+                                    <th>موجود است؟ :</th>
+                                    <th>موجودی  :</th>
+                                    <th>عملیات :</th>
+                                </tr>
+                            </thead>
+                            @foreach (var item in Model)
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td>@item.id</td>
+                                        <td>@item.ProductName</td>
+                                        <td>@item.CategoryProduct.categoryName</td>
+                                        <td>@Html.Raw(@item.ProductDescription)</td>
+
+                                        <td>@item.ShortProductDescription</td>
+                                        <td>@item.CreateDate</td>
+                                        <td>@item.SellCount</td>
+                                        <td>@item.Price تومان</td>
+                                        <td><img src="/MainProductImages/@item.MainProductImage" style="max-width: 100px; max-height: 100px;"></td>
+                                        @{
+                                            if (@item.IsInStock == true)
+                                            {
+                                                <td style="color: green">موجود </td>
+                                            }
+                                            else if (@item.IsInStock == false)
+                                            {
+                                                <td style="color: red">ناموجود </td>
+                                            }
+                                        }
+                                        <td>
+                                            @item.SubProducts.Where(p=>p.IsDeleted!=true&&p.IsInStock==true&&p.Count>0).Sum(p=>p.Count)
+                                        </td>
+                                        <td>
+                                            <a href="/admin/Product/edit/@item.id" class="btn btn-primary" style="width: 100%;margin: 3px 0px">ویرایش</a>
+                                            <a href="/admin/subproduct/index/@item.id" class="btn btn-secondary" style="width: 100%;margin: 3px 0px">مدل ها</a>
+                                            <a href="/admin/productFeature/index/@item.id" class="btn btn-warning" style="width: 100%;margin: 3px 0px">ویژگی ها</a>
+                                            <a href="/admin/gallery/index/@item.id" class="btn btn-dark" style="width: 100%;margin: 3px 0px">گالری </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            }
+                        </table>
+                        <nav aria-label="Page navigation example" style="margin-top: 20px">
+                            <ul class="pagination">
+
+                                @if (ViewBag.pageid > 1)
+                                {
+                                    <li class="page-item"><a class="page-link" href="/admin/product?pageid=@((ViewBag.pageid) - 1)&Search=@ViewBag.Search&Order=@ViewBag.Order&Stock=@ViewBag.Stock&Category=@ViewBag.Category">قبل</a></li>
+                                }
+                                @{
+                                    for (int i = 1; i < ViewBag.maxpage + 1; i++)
+                                    {
+                                        <li class="page-item @(ViewBag.pageid == i ? "active" : "")"><a class="page-link " href="/admin/product?pageid=@i&Search=@ViewBag.Search&Order=@ViewBag.Order&Stock=@ViewBag.Stock&Category=@ViewBag.Category" >@i</a></li>
+
+                                    }
+                                }
+                                @if (ViewBag.pageid < ViewBag.maxpage)
+                                {
+                                    <li class="page-item"><a class="page-link" href="/admin/product?pageid=@((ViewBag.pageid) + 1)&Search=@ViewBag.Search&Order=@ViewBag.Order&Stock=@ViewBag.Stock&Category=@ViewBag.Category" >بعد</a></li>
+
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid Ends-->

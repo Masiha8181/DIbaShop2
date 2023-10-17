@@ -15,6 +15,7 @@ namespace DataLayer.Entities
         [MaxLength(50)]
 
         public string ColorValue { get; set; }
+        public string ColorCode { get; set; }
         public List<SubProduct> SubProducts { get; set; }
 
     }

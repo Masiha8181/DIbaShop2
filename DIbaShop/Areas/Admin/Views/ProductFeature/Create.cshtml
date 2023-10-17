@@ -1,0 +1,76 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+@using DataLayer.Entities
+@model DataLayer.DTO.ProductFeature.CreateProductFeatureDTO
+@{
+    Product product = ViewBag.Product;
+}
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <h3>ساخت  ویژگی @product.ProductName </h3>
+            </div>
+            <div class="col-12 col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">کنترل های فرم</li>
+                    <li class="breadcrumb-item active">ورودی پایه</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <h5>ساخت ویژگی محصول @product.ProductName</h5>
+                </div>
+
+                <form class="form theme-form" method="post" asp-action="Create">
+                    <div class="card-body">
+                        <div class="row">
+                         
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="ProductInfoTitle" class="form-label"></label>
+                                    <input asp-for="ProductInfoTitle" type="text" class="form-control" placeholder="نام ویژگی محصول را وارد کنید:" />
+                                    <span class="text-danger" asp-validation-for="ProductInfoTitle"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="ProductInfoValue" class="form-label"></label>
+                                    <input asp-for="ProductInfoValue" id="text" class="form-control" placeholder="مقدار ویژگی محصول را وارد کنید">
+                                    <span class="text-danger" asp-validation-for="ProductInfoValue"></span>
+                                </div>
+                            </div>
+                        </div>
+                       <input type="hidden" value="@ViewBag.Id" asp-for="Productid"/>
+                      
+                        
+                        
+                      
+
+
+
+                    </div>
+                    <div class="card-footer text-end">
+                        <button class="btn btn-primary" type="submit">ایجاد</button>
+                        <input class="btn btn-light" type="reset" value="لغو">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

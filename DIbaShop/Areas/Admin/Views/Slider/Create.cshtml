@@ -1,0 +1,110 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+@model DataLayer.DTO.Slider.CreateSliderDTO
+<div class="container-fluid">
+   
+
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <h3>ساخت اسلایدر تصویر</h3>
+            </div>
+            <div class="col-12 col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">کنترل های فرم</li>
+                    <li class="breadcrumb-item active">ورودی پایه</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <h5>ساخت اسلایدر</h5>
+                </div>
+
+                <form class="form theme-form" method="post" asp-action="Create" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <div class="row">
+                          
+
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="SliderName" class="form-label"></label>
+                                    <input asp-for="SliderName"   type="text" class="form-control" />
+                                   
+                                    <span class="text-danger" asp-validation-for="SliderName"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="PageAddress" class="form-label"></label>
+                                    <input asp-for="PageAddress"  type="text" class="form-control" />
+                                   
+                                    <span class="text-danger" asp-validation-for="PageAddress"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="IsActive" class="form-label"></label>
+                                    <input asp-for="IsActive"  type="checkbox" class="form-check-input" />
+                                   
+                                    <span class="text-danger" asp-validation-for="IsActive"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="SliderImageAddress" class="form-label"></label>
+                                    <input asp-for="SliderImageAddress" id="Image" onchange="showPreview(event);" type="file" class="form-control" />
+                                    <img src="#" id="FinalImage" style="display: none" />
+                                    <span class="text-danger" asp-validation-for="SliderImageAddress"></span>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+
+
+
+                    </div>
+                    <div class="card-footer text-end">
+                        <button class="btn btn-primary" type="submit">ارسال</button>
+                        <input class="btn btn-light" type="reset" value="لغو">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    function showPreview(event) {
+        if (event.target.files.length > 0) {
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById("FinalImage");
+            preview.src = src;
+            preview.style.display = "block";
+            preview.style.width = "200px";
+        }
+    }
+
+
+</script>
+<!-- Container-fluid Ends-->

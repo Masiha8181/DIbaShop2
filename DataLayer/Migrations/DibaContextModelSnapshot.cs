@@ -149,6 +149,10 @@ namespace DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
+                    b.Property<string>("ColorCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ColorValue")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -270,6 +274,9 @@ namespace DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
                     b.Property<string>("ProductDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -290,7 +297,7 @@ namespace DataLayer.Migrations
 
                     b.HasIndex("CategoryProductid");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.ProductImage", b =>
@@ -350,10 +357,9 @@ namespace DataLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<string>("SizeValue")
-                        .IsRequired()
+                    b.Property<int>("SizeValue")
                         .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("int");
 
                     b.HasKey("id");
 
@@ -413,8 +419,8 @@ namespace DataLayer.Migrations
                     b.Property<bool>("IsInStock")
                         .HasColumnType("bit");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ProductModelName")
                         .IsRequired()
@@ -638,7 +644,7 @@ namespace DataLayer.Migrations
                         .IsRequired();
 
                     b.HasOne("DataLayer.Entities.Product", "Product")
-                        .WithMany()
+                        .WithMany("SubProducts")
                         .HasForeignKey("Productid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -693,6 +699,8 @@ namespace DataLayer.Migrations
                     b.Navigation("ProductImages");
 
                     b.Navigation("ProductInfos");
+
+                    b.Navigation("SubProducts");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.Size", b =>

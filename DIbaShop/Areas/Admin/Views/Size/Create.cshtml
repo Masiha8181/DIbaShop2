@@ -1,0 +1,64 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+@model DataLayer.DTO.Size.CreateSizeDto
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <h3>ساخت  سایز  </h3>
+            </div>
+            <div class="col-12 col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">کنترل های فرم</li>
+                    <li class="breadcrumb-item active">ورودی پایه</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <h5>ساخت سایز  </h5>
+                </div>
+
+                <form class="form theme-form" method="post" asp-action="Create">
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="SizeValue" class="form-label"></label>
+                                    <input asp-for="SizeValue" type="number" class="form-control" placeholder="مقدار سایز را وارد کنید:" />
+                                    <span class="text-danger" asp-validation-for="SizeValue"></span>
+                                </div>
+                            </div>
+                        </div>
+                       
+                       
+
+
+
+
+
+
+
+                    </div>
+                    <div class="card-footer text-end">
+                        <button class="btn btn-primary" type="submit">ایجاد</button>
+                        <input class="btn btn-light" type="reset" value="لغو">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

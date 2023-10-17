@@ -1,7 +1,7 @@
 using DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interface.IUnitOfWork;
-using Repository.Service.UserService;
+using Repository.Service.UnitOfWorkService;
 
 var builder = WebApplication.CreateBuilder(args);
 

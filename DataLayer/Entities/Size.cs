@@ -14,7 +14,7 @@ namespace DataLayer.Entities
         [Required]
         [MaxLength(50)]
 
-        public string SizeValue { get; set; }
+        public int SizeValue { get; set; }
         public List<SubProduct> SubProducts { get; set; }
     }
 }

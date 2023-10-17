@@ -1,0 +1,111 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+@model DataLayer.DTO.ProductFeature.ModifyProductFeatureDTO
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <h3>ویرایش  ویژگی @Model.ProductInfoTitle </h3>
+            </div>
+            <div class="col-12 col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">کنترل های فرم</li>
+                    <li class="breadcrumb-item active">ورودی پایه</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <h5>ویرایش ویژگی محصول </h5>
+                </div>
+
+                <form class="form theme-form" method="post" asp-action="Edit">
+                    <div class="card-body">
+                        <div class="row">
+                            <input asp-for="Productid" value="@Model.Productid" type="hidden"/>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="ProductInfoTitle" class="form-label"></label>
+                                    <input asp-for="ProductInfoTitle" type="text" class="form-control" placeholder="نام ویژگی محصول را وارد کنید:" />
+                                    <span class="text-danger" asp-validation-for="ProductInfoTitle"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="ProductInfoValue" class="form-label"></label>
+                                    <input asp-for="ProductInfoValue" id="text" class="form-control" placeholder="مقدار ویژگی محصول را وارد کنید">
+                                    <span class="text-danger" asp-validation-for="ProductInfoValue"></span>
+                                </div>
+                            </div>
+                        </div>
+                      
+
+
+
+
+
+
+
+                    </div>
+                    <div class="card-footer text-end">
+                        <button class="btn btn-primary" type="submit">ویرایش</button>
+                        <input class="btn btn-light" type="reset" value="لغو">
+                    </div>
+                </form>
+                <button class="btn btn-danger" onclick="sweet(@Model.id);">حذف</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    function sweet(id) {
+        swal({
+            title: "حذف!",
+            text: "آیا از حدف این ویژگی اطمینان دارید؟",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+
+                    $(function () {
+
+                        $.ajax({
+                            type: "GET",
+                            url: "/admin/ProductFeature/remove/@Model.id",
+                            data: { "name": "s" },
+                            success: function (response) {
+                                location.href = "/Admin/ProductFeature/index/@Model.Productid"
+                            },
+                            failure: function (response) {
+                                alert(response.responseText);
+                            },
+                            error: function (response) {
+                                alert(response.responseText);
+                            }
+                        });
+
+                    });
+
+                } else {
+                    swal("عملیات لغو شد");
+                }
+            });
+
+    }
+</script>

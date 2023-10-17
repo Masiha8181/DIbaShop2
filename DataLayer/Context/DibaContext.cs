@@ -30,6 +30,7 @@ namespace DataLayer.Context
         public DbSet<ProductInfo> ProductInfo { get; set; }
         public DbSet<Slider> Slider { get; set; }
         public DbSet<UserComment> UserComments { get; set; }
+        public DbSet<Product> Products { get; set; }
 
 
     }

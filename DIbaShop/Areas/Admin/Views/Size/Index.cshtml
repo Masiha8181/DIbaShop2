@@ -1,0 +1,71 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+}
+@model IEnumerable<DataLayer.Entities.Size>
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <h3>فهرست سایزها   </h3>
+            </div>
+            <div class="col-12 col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a></li>
+                    <li class="breadcrumb-item">جداول داده</li>
+                    <li class="breadcrumb-item active">جداول داده ای پایه</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="card">
+
+                <div class="card-body">
+                    <a href="/admin/size/create" class="btn btn-success" style="margin: 20px 0px">ایجاد سایز</a>
+                    <div class="table-responsive">
+
+                        <table id="Table" class="table table-bordered">
+                            <thead>
+                            <tr>
+                              
+                                <th>مقدار سایز :</th>
+
+
+                                <th>عملیات :</th>
+                            </tr>
+                            </thead>
+                            @foreach (var item in Model)
+                            {
+                                <tbody>
+                                <tr>
+                                  
+                                    <td>@item.SizeValue</td>
+
+
+
+
+                                    <td>
+                                        <a href="/admin/Size/Remove/@item.id" class="btn btn-danger">حذف</a>
+
+
+                                    </td>
+                                </tr>
+                                </tbody>
+                            }
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
