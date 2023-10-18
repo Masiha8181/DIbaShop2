@@ -49,6 +49,7 @@
                                     <th>قیمت پایه محصول :</th>
                                     <th>تصویر اصلی محصول :</th>
                                     <th>موجود است؟ :</th>
+                                  
                                     <th>عملیات :</th>
                                 </tr>
                             </thead>
@@ -78,6 +79,9 @@
                                                 <td style="color: red">ناموجود </td>
                                             }
                                         }
+                                        <td>
+                                          
+                                        </td>
                                         <td>
                                             <a href="/admin/Product/edit/@item2.id" class="btn btn-primary" style="width: 100%; margin: 3px 0px">ویرایش</a>
                                             <a href="" class="btn btn-secondary" style="width: 100%; margin: 3px 0px">مدل ها</a>
@@ -117,6 +121,7 @@
                                     <th>سایز مدل :</th>
                                     <th>موجود است؟:</th>
                                     <th>تاریخ ایجاد:</th>
+                                    <th> تخفیف  :</th>
                                     <th>عملیات :</th>
                                 </tr>
                             </thead>
@@ -127,7 +132,11 @@
                                         <td>@item.id</td>
                                         <td>@item.ProductModelName</td>
                                         <td>@item.Count</td>
-                                        <td>@item.Price</td>
+                                        <td>
+                                            
+                                            @item.Price
+                                       
+                                        </td>
                                         <td style="text-align: center">@item.Color.ColorValue<br /> <br /> <span style="display: inline-block; width: 50px; height: 50px; border-radius: 50%;background-color: @item.Color.ColorCode"></span></td>
                                         <td>@item.Size.SizeValue</td>
                                         @{
@@ -141,8 +150,25 @@
                                                 }
                                         }
                                         <td>@item.CreateDate</td>
+                                        @{
+                                            if (item.DiscountPercent!=null)
+                                            {
+                                                <td> <span>درصد تخفیف :@item.DiscountPercent%</span><br />
+                                      <span>قیمت تخفیف :@item.DiscountAfterPrice تومان</span><br />
+                                                    <span>شروع تخفیف :@item.DiscountStart</span>
+                                                    <br />
+                                                    <span>پایان تخفیف :@item.DiscountEnd</span></td><br />
+                                               
+                                            }
+                                            else
+                                            {
+                                                <td>ندارد</td>
+                                            }
+                                        }
                                         <td style="text-align: center">
                                             <a href="/admin/SubProduct/edit/@item.id" class="btn btn-primary" style="margin-bottom: 10px">ویرایش</a>
+                                            <a href="/admin/SubProduct/Discount/@item.id" class="btn btn-secondary" style="margin-bottom: 10px">اضافه کردن تخفیف</a>
+                                            <a href="/admin/SubProduct/Discount/@item.id" class="btn btn-dark" style="margin-bottom: 10px">ویرایش تخفیف</a>
                                             <br>
                                             <a href="/admin/SubProduct/Increase/@item.id" class="" style="font-size: 27px; display: inline-block; color: green"><i class="bi bi-plus-circle-fill"></i></a>
                                             <a href="/admin/SubProduct/decrease/@item.id" class="" style="font-size: 27px; display: inline-block; color: red"><i class="bi bi-dash-circle-fill"></i></a>

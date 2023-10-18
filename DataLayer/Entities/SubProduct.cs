@@ -19,7 +19,19 @@ namespace DataLayer.Entities
         
         [Required]
         public decimal Price { get; set; }
-   
+        public int? DiscountPercent { get; set; }
+        public DateTime? DiscountStart { get; set; }
+        public DateTime? DiscountEnd { get; set; }
+        public bool? IsHaveActiveDIscount { get; set; }
+
+        public decimal? DiscountAfterPrice
+        {
+            get
+            {
+                return (Price * DiscountPercent) / 100;
+            }
+
+        }
         [Required]
         public int Count { get; set; }
         public DateTime CreateDate { get; set; }

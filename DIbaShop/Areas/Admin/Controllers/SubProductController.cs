@@ -121,5 +121,32 @@ namespace DIbaShop.Areas.Admin.Controllers
             _unitOfWork.SubProductRepository.remove(id);
             return RedirectToAction("Index", new { id = subpro.Productid });
         }
+
+        public IActionResult Discount(int id)
+        {
+            var subProduct = _unitOfWork.SubProductRepository.getSubProduct(id);
+            CreateDiscountDTO createDiscountDto = new CreateDiscountDTO()
+            {
+                SubProduct = subProduct
+            };
+            return View(createDiscountDto);
+        }
+
+        [HttpPost]
+        public IActionResult Discount(CreateDiscountDTO createDiscountDto, int hidden)
+
+        {
+            ModelState.Remove("SubProduct");
+            var subproduc = _unitOfWork.SubProductRepository.getSubProduct(hidden);
+            createDiscountDto.SubProduct = subproduc;
+            if (ModelState.IsValid)
+            {
+                //TODO INSERT TO DB 
+                return RedirectToAction("Index", new { id = subproduc.Productid });
+            }
+           
+            
+            return View(createDiscountDto);
+        }
     }
 }

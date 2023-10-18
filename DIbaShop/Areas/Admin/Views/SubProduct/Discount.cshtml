@@ -1,0 +1,117 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_AdminLayout";
+
+}
+@model DataLayer.DTO.SubProduct.CreateDiscountDTO
+<div class="container-fluid">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <h3>ساخت  تخفیف برای @Model.SubProduct.ProductModelName</h3>
+            </div>
+            <div class="col-12 col-sm-6">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html"> <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">کنترل های فرم</li>
+                    <li class="breadcrumb-item active">ورودی پایه</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <h5>ساخت تخفیف محصول</h5>
+                </div>
+
+                <form class="form theme-form" method="post" asp-action="Discount" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <div class="row">
+                            <input type="hidden" name="hidden" value="@Model.SubProduct.id"/>
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="DiscountPercent" class="form-label"></label>
+                                    <input asp-for="DiscountPercent" id="PercentInput" onchange="DISCOUNT()" type="number" class="form-control" placeholder="درصد تخفیف را وارد کنید:" />
+                                    <span class="text-danger" asp-validation-for="DiscountPercent"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="DiscountStart" class="form-label"></label>
+                                    <input asp-for="DiscountStart" class="form-control" type="date">
+                                    <span class="text-danger" asp-validation-for="DiscountStart"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="DiscountEnd" class="form-label"></label>
+                                    <input asp-for="DiscountEnd" class="form-control" type="date">
+                                    <span class="text-danger" asp-validation-for="DiscountEnd"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label asp-for="IsHaveActiveDIscount" class="form-label"></label>
+                                    <input asp-for="IsHaveActiveDIscount" class="form-check-input" type="checkbox">
+                                    <span class="text-danger" asp-validation-for="IsHaveActiveDIscount"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-3">
+                                    @{
+                                        int price = Convert.ToInt32(@Model.SubProduct.Price);
+                                    }
+                                    <h3>قیمت محصول:
+                                        <span id="Price">
+                                            @price 
+                                        </span> تومان
+                                    </h3>
+                                    <h3>قیمت کل تخفیف اعمال شده: <span id="TotalDiscountPrice">0 </span>تومان </h3>
+                                    <h3>قیمت با تخفیف محصول: <span id="PriceWithDiscount"> @Model.SubProduct.Price</span> تومان</h3>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="card-footer text-end">
+                        <button class="btn btn-primary" type="submit">ایجاد</button>
+                        <input class="btn btn-light" type="reset" value="لغو">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+
+    var PercentInput = document.getElementById('PercentInput');
+    var Price = document.getElementById('Price');
+    var TotalDiscountPrice = document.getElementById('TotalDiscountPrice');
+    var PriceWithDiscount = document.getElementById('PriceWithDiscount');
+    function DISCOUNT() {
+        var DiscountPercent = ((PercentInput.value) * Price.innerText )/ 100;
+        TotalDiscountPrice.innerText = DiscountPercent;
+        PriceWithDiscount.innerText = Price.innerText - DiscountPercent;
+    };
+
+</script>
